@@ -4,6 +4,14 @@
  */
 package balatro.fanmade.GamePlay;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Rafly
@@ -16,7 +24,43 @@ public class PlayBoard extends javax.swing.JFrame {
     public PlayBoard() {
         initComponents();
         this.setVisible(true);
+        
+        //mengatur layout kartu
+        jPanel2.setLayout(new GridLayout(1, 6)); // Grid 3x3
+
+        // Tambahkan kartu ke jPanel1
+        for (int i = 0; i < 6; i++) {
+            JPanel card = createCard(); // Buat kartu
+            jPanel2.add(card); // Tambahkan ke panel
+        }
+
+        // Refresh panel setelah menambahkan komponen
+        jPanel2.revalidate();
+        jPanel2.repaint();
     }
+    
+    private JPanel createCard() {
+        JPanel card = new JPanel();
+        card.setPreferredSize(new Dimension(100, 150));
+        card.setBackground(new Color(173, 216, 230)); // Warna biru muda
+        card.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // Border hitam
+
+        // Tambahkan event listener untuk mendeteksi klik
+        card.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Ganti warna saat kartu diklik
+                if (card.getBackground().equals(new Color(173, 216, 230))) {
+                    card.setBackground(Color.LIGHT_GRAY); // Warna saat dipilih
+                } else {
+                    card.setBackground(new Color(173, 216, 230)); // Kembali ke warna awal
+                }
+            }
+        });
+
+        return card;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,6 +73,7 @@ public class PlayBoard extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         handListButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,6 +92,17 @@ public class PlayBoard extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 444, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -54,13 +110,17 @@ public class PlayBoard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(handListButton)
-                .addContainerGap(319, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(181, Short.MAX_VALUE)
-                .addComponent(handListButton)
+                .addContainerGap(240, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(handListButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(96, 96, 96))
         );
 
@@ -125,5 +185,6 @@ public class PlayBoard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton handListButton;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
